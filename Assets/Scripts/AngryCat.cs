@@ -5,46 +5,36 @@ using UnityEngine;
 
 public class AngryCat : Unit
 {
-    private float speed = 2.0F;
+    public float speed = 2f;
 
-    private Vector3 direction;
-
+    private float raduis = 0.1f;
+    private float direction = 1f;
 
     private SpriteRenderer sprite;
 
-    private void Awake()
+    public void Awake()
     {
         sprite = GetComponentInChildren<SpriteRenderer>();
     }
 
-    private void Start()
+    public void Update()
     {
-        direction = transform.right;
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position + transform.right * direction * 0.5F, raduis);
+
+        if (colliders.Length > 0) direction *= -1.0F;
+
+        Vector2 movement = new Vector2(speed * direction, 0);
+        transform.Translate(movement * Time.deltaTime);
+
+        sprite.flipX = direction > 0;
     }
-
-    private void Update()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        Move();
-    }
-
-    private void OnTriggerEnter2D(Collider2D collider)
-    {
-        Unit unit = collider.GetComponent<Unit>();
-
-        if (unit && unit is Cat)
+        Cat cat = collision.GetComponent<Cat>();
+        if (cat)
         {
-            if (Mathf.Abs(unit.transform.position.x - transform.position.x) < 0.3F) ReceiveDamage();
-            else unit.ReceiveDamage();
+            cat.ReceiveDamage();
         }
-    }
-
-    private void Move()
-    {
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position + transform.up * 0.5F + transform.right * direction.x * 0.5F, 0.1F);
-
-        if (colliders.Length > 0 && colliders.All(x => !x.GetComponent<Cat>())) direction *= -1.0F;
-
-        transform.position = Vector3.MoveTowards(transform.position, transform.position + direction, speed * Time.deltaTime);
     }
 
 }

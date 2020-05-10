@@ -1,18 +1,21 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEditor.Compilation;
 
 public class Cat : Unit
 {
 
-	int lives = 9;
-	float speed = 3.0f;
-	float jumpForce = 30.0f;
+	public int maxSatiety = 10;
+	public float speed = 3.0f;
+	public float jumpForce = 30.0f;
+
+	private int satiety;
+	private bool isGrounded = false;
 
 	new private Rigidbody2D rigibody;
 	private Animator animator;
 	private SpriteRenderer sprite;
 
-	private bool isGrounded = false;
 	private State state
 	{
 		get { return (State)animator.GetInteger("state"); }
@@ -25,6 +28,7 @@ public class Cat : Unit
 		animator = GetComponent<Animator>();
 		sprite = GetComponentInChildren<SpriteRenderer>();
 
+		satiety = maxSatiety;
 	}
 
 	private void FixedUpdate()
@@ -57,6 +61,25 @@ public class Cat : Unit
 	{
 		Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 1f);
 		isGrounded = colliders.Length > 1;
+	}
+
+	private void Respawn()
+	{
+		satiety = maxSatiety;
+		var respawn = GameObject.Find("Respawn");
+		transform.position = respawn.transform.position;
+	}
+
+	public void Eat()
+	{
+		satiety++;
+		Debug.Log(satiety);
+	}
+
+	public override void ReceiveDamage()
+	{
+		satiety--;
+		if (satiety <= 0) Respawn(); 
 	}
 }
 
