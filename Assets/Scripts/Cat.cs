@@ -5,11 +5,11 @@ using UnityEditor.Compilation;
 public class Cat : Unit
 {
 
-	public int maxSatiety = 10;
+	public int maxSatiety = 3;
 	public float speed = 3.0f;
 	public float jumpForce = 30.0f;
 
-	private int satiety;
+	public int satiety;
 	private bool isGrounded = false;
 
 	new private Rigidbody2D rigibody;
