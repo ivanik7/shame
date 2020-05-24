@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
-using UnityEditor.Compilation;
 
 public class Cat : Unit
 {
@@ -8,8 +6,9 @@ public class Cat : Unit
 	public int maxSatiety = 3;
 	public float speed = 3.0f;
 	public float jumpForce = 30.0f;
-
+	public float yBorder = -5;
 	public int satiety;
+
 	private bool isGrounded = false;
 
 	new private Rigidbody2D rigibody;
@@ -42,6 +41,7 @@ public class Cat : Unit
 		if (isGrounded) state = State.Idle;
 		if (Input.GetButton("Horizontal")) Run();
 		if (isGrounded && Input.GetButtonDown("Jump")) jump();
+		if (transform.position.y < yBorder) Respawn();
 		
 	}
 	private void Run()
