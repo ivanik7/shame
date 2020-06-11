@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Cat : Unit
 {
@@ -30,6 +32,11 @@ public class Cat : Unit
 		satiety = maxSatiety;
 	}
 
+	private void Start()
+	{
+		Stats.startTime = DateTime.Now;
+	}
+
 	private void FixedUpdate()
 	{
 		CheckGround();
@@ -44,6 +51,15 @@ public class Cat : Unit
 		if (transform.position.y < yBorder) Respawn();
 		
 	}
+
+	private void OnTriggerEnter2D(Collider2D collider)
+	{
+		if(collider.name == "EndTrigger")
+		{
+			SceneManager.LoadScene(2);
+		}
+	}
+
 	private void Run()
 	{
 		if (isGrounded) state = State.Run;
@@ -66,6 +82,7 @@ public class Cat : Unit
 	private void Respawn()
 	{
 		satiety = maxSatiety;
+		Stats.dies++;
 		var respawn = GameObject.Find("Respawn");
 		transform.position = respawn.transform.position;
 	}
@@ -73,11 +90,13 @@ public class Cat : Unit
 	public void Eat()
 	{
 		satiety++;
+		Stats.birds++;
 		Debug.Log(satiety);
 	}
 
 	public override void ReceiveDamage()
 	{
+		Stats.damage++;
 		satiety--;
 		if (satiety <= 0) Respawn(); 
 	}
