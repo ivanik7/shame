@@ -5,14 +5,9 @@ using UnityEngine;
 public class Camera : MonoBehaviour
 {
 
-    private float speed = 2.0f;
+    private float speed = 3.5f;
     [SerializeField] private Transform target;
-    void Awake()
-    {
-        
-    }
 
-    // Update is called once per frame
     void Update()
     {
         Vector3 pos = target.position;

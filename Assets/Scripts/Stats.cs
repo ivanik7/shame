@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-public static class Stats
+public class Stats : MonoBehaviour
 {
     public static DateTime startTime = DateTime.Now;
     public static int dies = 0;
