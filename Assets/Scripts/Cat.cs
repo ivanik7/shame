@@ -6,7 +6,7 @@ public class Cat : Unit
 {
 
     public int maxSatiety = 3;
-    public float speed = 3.0f;
+    public float speed = 10;
     public float jumpForce = 30.0f;
     public float fallMultiplyer = 2.5f;
     public float jumpMultiplyer = 2.0f;
@@ -14,7 +14,7 @@ public class Cat : Unit
     public int satiety;
     private bool isGrounded = false;
 
-    new private Rigidbody2D rigibody;
+    private Rigidbody2D rigibody;
     private Animator animator;
     private SpriteRenderer sprite;
 
@@ -40,7 +40,6 @@ public class Cat : Unit
 
     private void FixedUpdate()
     {
-        Debug.Log(rigibody.velocity.x);
         CheckGround();
         if (!isGrounded) state = State.Jump;
         else if (Math.Abs(rigibody.velocity.x) > 0.1f) state = State.Run;
@@ -85,12 +84,14 @@ public class Cat : Unit
 
     private void CheckGround()
     {
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 1f);
+        // FIXME
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 1.5f);
         isGrounded = colliders.Length > 1;
     }
 
     private void Respawn()
     {
+        // TODO: Maybe gameover
         satiety = maxSatiety;
         Stats.dies++;
         var respawn = GameObject.Find("Respawn");

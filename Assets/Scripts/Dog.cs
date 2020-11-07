@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Dog : MonoBehaviour
 {
-    public float speed = 3f;
+    public float speed = 9.9f;
 
     // Update is called once per frame
     void Update()
