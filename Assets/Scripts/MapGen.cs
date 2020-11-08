@@ -13,7 +13,7 @@ public class MapGen : MonoBehaviour
 
     public int mapLength = 200;
 
-    private int seed = 543234556;
+    private int seed = 543543456;
     public TileBase groundTile;
     public TileBase waterTile;
     public TileBase platformTile;

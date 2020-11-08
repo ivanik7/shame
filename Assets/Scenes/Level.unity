@@ -327,6 +327,11 @@ PrefabInstance:
       propertyPath: speed
       value: 9.9
       objectReference: {fileID: 0}
+    - target: {fileID: 2315212710818100846, guid: da50c9863b44d034ea4a463434a46d08,
+        type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 2060641154}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: da50c9863b44d034ea4a463434a46d08, type: 3}
 --- !u!1 &656044459
@@ -374,8 +379,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mapLength: 200
-  groundTile: {fileID: 0}
-  waterTile: {fileID: 0}
+  groundTile: {fileID: 11400000, guid: 48b1b30393c1343408f60f7f634765f8, type: 2}
+  waterTile: {fileID: 11400000, guid: c8532ebc5b1fbf442bfb462a90e65116, type: 2}
+  platformTile: {fileID: 11400000, guid: 3b7aa5b6f85239f47830e46f36b153b4, type: 2}
 --- !u!1 &710509718
 GameObject:
   m_ObjectHideFlags: 0
@@ -1006,6 +1012,18 @@ Transform:
   m_Father: {fileID: 656044460}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2060641154 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 992953028844397526, guid: 18e6b7351635c454cbdeda5a1800f693,
+    type: 3}
+  m_PrefabInstance: {fileID: 992953027894313860}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a306aff141380cd4882004fd167b67a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2066119219
 GameObject:
   m_ObjectHideFlags: 0
@@ -1117,6 +1135,11 @@ PrefabInstance:
         type: 3}
       propertyPath: speed
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 992953028844397526, guid: 18e6b7351635c454cbdeda5a1800f693,
+        type: 3}
+      propertyPath: maxSatiety
+      value: 1000
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 18e6b7351635c454cbdeda5a1800f693, type: 3}
