@@ -8,6 +8,7 @@ public class MapGen : MonoBehaviour
 {
     const int TERRAIN_HEIGHT = 20;
     const int WATER_HEIGHT = 15;
+    const int JUMP_HEIGHT = 4;
     const int PLATFORM_MAX_WIDTH = 10;
     const int PLATFORM_MAX_SPACE = 3;
 
@@ -18,14 +19,22 @@ public class MapGen : MonoBehaviour
     public TileBase waterTile;
     public TileBase platformTile;
     private Tilemap tilemap;
+    private Tilemap waterTilemap;
     private void Start()
     {
-        tilemap = GetComponentInChildren<Tilemap>();
+        // FIXME
+        for (int i = 0; i < transform.GetChild(0).childCount; i++)
+        {
+            GameObject child = transform.GetChild(0).GetChild(i).gameObject;
+            if (child.name == "Tilemap") tilemap = child.GetComponent<Tilemap>();
+            else if (child.name == "Water") waterTilemap = child.GetComponent<Tilemap>();
+        }
 
         Random.InitState(seed);
 
         int platformWidth = 0;
         int platformHeight = 0;
+        bool isFirstPlatform = true;
         bool isSpace = false;
 
         float noise = 0f;
@@ -50,7 +59,7 @@ public class MapGen : MonoBehaviour
                 }
                 else if (j < WATER_HEIGHT)
                 {
-                    tilemap.SetTile(new Vector3Int(i, j, 0), waterTile);
+                    waterTilemap.SetTile(new Vector3Int(i, j, 0), waterTile);
                 }
             }
 
@@ -69,11 +78,19 @@ public class MapGen : MonoBehaviour
             }
             else if (height < WATER_HEIGHT - 1)
             {
+                if (isFirstPlatform)
+                {
+                    isFirstPlatform = false;
+                    isSpace = false;
+                    platformHeight = 0;
+                }
 
-                tilemap.SetTile(new Vector3Int(i, 0, 0), platformTile);
-
-                platformHeight = Mathf.FloorToInt(Random.Range(WATER_HEIGHT + 3, platformHeight < WATER_HEIGHT ? WATER_HEIGHT + 5 : platformHeight + 6));
+                platformHeight = Mathf.FloorToInt(Random.Range(WATER_HEIGHT + JUMP_HEIGHT - 2, platformHeight < WATER_HEIGHT ? WATER_HEIGHT + JUMP_HEIGHT : platformHeight + JUMP_HEIGHT));
                 platformWidth = Mathf.FloorToInt(Random.Range(2, isSpace ? PLATFORM_MAX_SPACE : PLATFORM_MAX_WIDTH));
+            }
+            else if (height <= WATER_HEIGHT - 1)
+            {
+                isFirstPlatform = true;
             }
         }
     }

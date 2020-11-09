@@ -6,10 +6,14 @@ public class Cat : Unit
 {
 
     public int maxSatiety = 3;
-    public float speed = 10;
+    public float speed = 10f;
+    public float waterSpeed = 3f;
+    private float currentSpeed = 0f;
 
     public float yBorder = -5;
     public int satiety;
+    private bool isDamaged = false;
+    private float damageTime = 0f;
 
     private Rigidbody2D rigibody;
     private Animator animator;
@@ -19,7 +23,10 @@ public class Cat : Unit
     private State state
     {
         get { return (State)animator.GetInteger("state"); }
-        set { animator.SetInteger("state", (int)value); }
+        set
+        {
+            if (!isDamaged) animator.SetInteger("state", (int)value);
+        }
     }
 
     private void Awake()
@@ -29,6 +36,7 @@ public class Cat : Unit
         sprite = GetComponentInChildren<SpriteRenderer>();
         jump = GetComponentInChildren<Jump>();
 
+        currentSpeed = speed;
         satiety = maxSatiety;
     }
 
@@ -51,6 +59,11 @@ public class Cat : Unit
         if (Input.GetButtonDown("Jump")) jump.DoJump();
         jump.holdJump = Input.GetButton("Jump");
         if (transform.position.y < yBorder) Respawn();
+
+        if (Time.time - damageTime > 5f)
+        {
+            isDamaged = false;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collider)
@@ -64,7 +77,7 @@ public class Cat : Unit
     private void Run()
     {
         Vector3 direction = transform.right * Input.GetAxis("Horizontal");
-        transform.position = Vector3.MoveTowards(transform.position, transform.position + direction, speed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, transform.position + direction, currentSpeed * Time.deltaTime);
         sprite.flipX = direction.x > 0;
     }
 
@@ -81,15 +94,37 @@ public class Cat : Unit
     {
         satiety++;
         Stats.birds++;
-        Debug.Log(satiety);
     }
 
     public override void ReceiveDamage()
     {
-        Stats.damage++;
-        satiety--;
-        if (satiety <= 0) Respawn();
+        if (!isDamaged)
+        {
+            Stats.damage++;
+            satiety--;
+            state = State.Die;
+            isDamaged = true;
+            damageTime = Time.time;
+            if (satiety <= 0) Respawn();
+        }
     }
+
+    void OnCollisionEnter2D(Collision2D collisionInfo)
+    {
+        if (collisionInfo.gameObject.name == "Water")
+        {
+            currentSpeed = waterSpeed;
+        }
+
+    }
+    void OnCollisionExit2D(Collision2D collisionInfo)
+    {
+        if (collisionInfo.gameObject.name == "Water")
+        {
+            currentSpeed = speed;
+        }
+    }
+
 }
 
 public enum State
@@ -97,5 +132,5 @@ public enum State
     Idle,
     Run,
     Jump,
-    Damaged
+    Die
 }
