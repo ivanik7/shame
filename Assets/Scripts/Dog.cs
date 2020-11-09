@@ -41,7 +41,7 @@ public class Dog : Unit
         {
             currentJumpCooldown -= Time.deltaTime;
         }
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position + transform.right * direction, raduis);
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position + transform.right * direction + transform.up * -0.5f, raduis);
         bool isCollided = false;
         foreach (Collider2D item in colliders)
         {
