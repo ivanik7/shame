@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Jump : MonoBehaviour
 {
-    public float jumpForce = 30.0f;
+    public float jumpForce = 60.0f;
     public float fallMultiplyer = 2.5f;
     public float jumpMultiplyer = 2.0f;
     public bool holdJump = false;
@@ -28,7 +28,7 @@ public class Jump : MonoBehaviour
         }
         else if (rigibody.velocity.y > 0 && !holdJump)
         {
-            rigibody.velocity += Vector2.up * Physics2D.gravity.y * (2f - 1) * Time.deltaTime;
+            rigibody.velocity += Vector2.up * Physics2D.gravity.y * (jumpMultiplyer - 1) * Time.deltaTime;
         }
 
     }

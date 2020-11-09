@@ -10,7 +10,6 @@ public class Unit : MonoBehaviour
 
     protected virtual void Die()
     {
-        Debug.Log("Die" + name);
         Destroy(gameObject);
     }
 }

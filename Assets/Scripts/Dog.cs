@@ -41,7 +41,8 @@ public class Dog : Unit
         {
             currentJumpCooldown -= Time.deltaTime;
         }
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position + transform.right * direction + transform.up * -0.5f, raduis);
+
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position + new Vector3(direction, -0.5f, 0), raduis);
         bool isCollided = false;
         foreach (Collider2D item in colliders)
         {
@@ -54,7 +55,6 @@ public class Dog : Unit
         jump.holdJump = isCollided;
         if (isCollided)
         {
-            Debug.Log("dsads");
             if (currentJumpCooldown <= 0f)
             {
                 currentJumpCooldown = jumpCooldown;
