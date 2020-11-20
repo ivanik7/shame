@@ -1,0 +1,64 @@
+{
+  "levels": [
+    {
+      "number": 1,
+      "seed": 2345634343,
+      "length": 200
+    },
+    {
+      "number": 2,
+      "seed": 4343243243,
+      "length": 200
+    },
+    {
+      "number": 3,
+      "seed": 5432465656,
+      "length": 200
+    },
+    {
+      "number": 4,
+      "seed": 6543565455,
+      "length": 200
+    },
+    {
+      "number": 5,
+      "seed": 7564364354,
+      "length": 200
+    },
+    {
+      "number": 6,
+      "seed": 656543424,
+      "length": 200
+    },
+    {
+      "number": 7,
+      "seed": 231321231,
+      "length": 200
+    },
+    {
+      "number": 8,
+      "seed": 766535665,
+      "length": 200
+    },
+    {
+      "number": 9,
+      "seed": 54344544,
+      "length": 200
+    },
+    {
+      "number": 10,
+      "seed": 2345634343,
+      "length": 200
+    },
+    {
+      "number": 11,
+      "seed": 2345634343,
+      "length": 200
+    },
+    {
+      "number": 12,
+      "seed": 2345634343,
+      "length": 200
+    }
+  ]
+}

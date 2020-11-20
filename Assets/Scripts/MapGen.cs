@@ -12,9 +12,9 @@ public class MapGen : MonoBehaviour
     const int PLATFORM_MAX_WIDTH = 10;
     const int PLATFORM_MAX_SPACE = 3;
 
-    public int mapLength = 200;
+    static public int mapLength = 200;
 
-    private int seed = 543543456;
+    static public int seed = 543543456;
     public TileBase groundTile;
     public TileBase waterTile;
     public TileBase platformTile;
