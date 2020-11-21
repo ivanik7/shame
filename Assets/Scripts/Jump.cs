@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Jump : MonoBehaviour
 {
-    public float jumpForce = 60.0f;
+    public float jumpForce = 10.0f;
     public float fallMultiplyer = 2.5f;
     public float jumpMultiplyer = 2.0f;
     public bool holdJump = false;
@@ -18,17 +18,21 @@ public class Jump : MonoBehaviour
         rigibody = GetComponent<Rigidbody2D>();
 
     }
-    private void Update()
+    private void FixedUpdate()
     {
         // Правильный прыжек
         // TODO: Пересмотреть этот кусок кода
         if (rigibody.velocity.y < 0)
         {
-            rigibody.velocity += Vector2.up * Physics2D.gravity.y * (fallMultiplyer - 1) * Time.deltaTime;
+            rigibody.gravityScale = fallMultiplyer;
         }
         else if (rigibody.velocity.y > 0 && !holdJump)
         {
-            rigibody.velocity += Vector2.up * Physics2D.gravity.y * (jumpMultiplyer - 1) * Time.deltaTime;
+            rigibody.gravityScale = jumpMultiplyer;
+        }
+        else
+        {
+            rigibody.gravityScale = 1f;
         }
 
     }
