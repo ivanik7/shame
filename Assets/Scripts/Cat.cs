@@ -15,6 +15,7 @@ public class Cat : Unit
     private bool isDamaged = false;
     private float damageTime = 0f;
 
+    public Transform end;
     private Rigidbody2D rigibody;
     private Animator animator;
     private SpriteRenderer sprite;
@@ -64,13 +65,10 @@ public class Cat : Unit
         {
             isDamaged = false;
         }
-    }
 
-    private void OnTriggerEnter2D(Collider2D collider)
-    {
-        if (collider.name == "EndTrigger")
+        if (transform.position.x > end.position.x)
         {
-            SceneManager.LoadScene(2);
+            SceneManager.LoadScene("Result");
         }
     }
 
@@ -111,6 +109,7 @@ public class Cat : Unit
 
     void OnCollisionEnter2D(Collision2D collisionInfo)
     {
+        // FIXME
         if (collisionInfo.gameObject.name == "Water")
         {
             currentSpeed = waterSpeed;
@@ -119,6 +118,7 @@ public class Cat : Unit
     }
     void OnCollisionExit2D(Collision2D collisionInfo)
     {
+        // FIXME
         if (collisionInfo.gameObject.name == "Water")
         {
             currentSpeed = speed;

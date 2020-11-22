@@ -12,24 +12,20 @@ public class MapGen : MonoBehaviour
     const int PLATFORM_MAX_WIDTH = 10;
     const int PLATFORM_MAX_SPACE = 3;
 
+    const int SAVE_LENGTH = 50;
+
     static public int mapLength = 200;
 
     static public int seed = 543543456;
+
     public TileBase groundTile;
     public TileBase waterTile;
     public TileBase platformTile;
-    private Tilemap tilemap;
-    private Tilemap waterTilemap;
+    public Tilemap tilemap;
+    public Tilemap waterTilemap;
+    public Transform endFlag;
     private void Start()
     {
-        // FIXME
-        for (int i = 0; i < transform.GetChild(0).childCount; i++)
-        {
-            GameObject child = transform.GetChild(0).GetChild(i).gameObject;
-            if (child.name == "Tilemap") tilemap = child.GetComponent<Tilemap>();
-            else if (child.name == "Water") waterTilemap = child.GetComponent<Tilemap>();
-        }
-
         Random.InitState(seed);
 
         int platformWidth = 0;
@@ -45,9 +41,9 @@ public class MapGen : MonoBehaviour
             x++;
         }
 
-        for (int i = 0; i < mapLength; i++)
+        for (int i = 0; i < mapLength + 2 * SAVE_LENGTH; i++)
         {
-            noise = Mathf.PerlinNoise(((i + x) / (float)mapLength) * 8f, seed * 0.000001f);
+            noise = Mathf.PerlinNoise(((i + x + SAVE_LENGTH) / (float)mapLength) * 8f, seed * 0.000001f);
             int height = Mathf.FloorToInt(noise * TERRAIN_HEIGHT);
 
             for (int j = 0; j < TERRAIN_HEIGHT; j++)
@@ -92,6 +88,12 @@ public class MapGen : MonoBehaviour
             {
                 isFirstPlatform = true;
             }
+
+            if (i == mapLength + SAVE_LENGTH)
+            {
+                endFlag.position = new Vector3(i - 0.5f, isSpace ? height : platformHeight - 0.5f, 0f);
+            }
+
         }
     }
 
