@@ -1,12 +1,23 @@
 ﻿using System;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Result : MonoBehaviour
 {
-    void Start()
+    public static DateTime startTime = DateTime.Now;
+    public static int damage = 0;
+    public static int birds = 0;
+    public static bool isDie = false;
+
+    public static void Fail()
     {
-        Text text = GetComponent<Text>();
-        text.text = $"Время: {(DateTime.Now - Stats.startTime).TotalSeconds.ToString("F")}\nСмертей: {Stats.dies}\nПтиц: {Stats.birds}\nУрон: {Stats.damage}";
+        isDie = true;
+        SceneManager.LoadScene("Result");
+    }
+
+    public static void Psss()
+    {
+        isDie = false;
+        SceneManager.LoadScene("Result");
     }
 }

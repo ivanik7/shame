@@ -1,6 +1,5 @@
 ﻿using System;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class Cat : Unit
 {
@@ -43,7 +42,7 @@ public class Cat : Unit
 
     private void Start()
     {
-        Stats.startTime = DateTime.Now;
+        Result.startTime = DateTime.Now;
     }
 
     private void FixedUpdate()
@@ -59,7 +58,7 @@ public class Cat : Unit
         if (Input.GetButton("Horizontal")) Run();
         if (Input.GetButtonDown("Jump")) jump.DoJump();
         jump.holdJump = Input.GetButton("Jump");
-        if (transform.position.y < yBorder) Respawn();
+        if (transform.position.y < yBorder) Die();
 
         if (Time.time - damageTime > 5f)
         {
@@ -68,7 +67,7 @@ public class Cat : Unit
 
         if (transform.position.x > end.position.x)
         {
-            SceneManager.LoadScene("Result");
+            Result.Psss();
         }
     }
 
@@ -79,31 +78,27 @@ public class Cat : Unit
         sprite.flipX = direction.x > 0;
     }
 
-    private void Respawn()
+    protected override void Die()
     {
-        // TODO: Maybe gameover
-        satiety = maxSatiety;
-        Stats.dies++;
-        var respawn = GameObject.Find("Respawn");
-        transform.position = respawn.transform.position;
+        Result.Fail();
     }
 
     public void Eat()
     {
         satiety++;
-        Stats.birds++;
+        Result.birds++;
     }
 
     public override void ReceiveDamage()
     {
         if (!isDamaged)
         {
-            Stats.damage++;
+            Result.damage++;
             satiety--;
             state = State.Die;
             isDamaged = true;
             damageTime = Time.time;
-            if (satiety <= 0) Respawn();
+            if (satiety <= 0) Die();
         }
     }
 

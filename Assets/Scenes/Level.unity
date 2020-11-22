@@ -737,7 +737,7 @@ MonoBehaviour:
   platformTile: {fileID: 11400000, guid: 3b7aa5b6f85239f47830e46f36b153b4, type: 2}
   tilemap: {fileID: 1005269939}
   waterTilemap: {fileID: 1278939535}
-  EndFlag: {fileID: 266317138}
+  endFlag: {fileID: 266317138}
 --- !u!1 &710509718
 GameObject:
   m_ObjectHideFlags: 0
@@ -1838,6 +1838,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cat
       objectReference: {fileID: 0}
+    - target: {fileID: 992953028844397526, guid: 18e6b7351635c454cbdeda5a1800f693,
+        type: 3}
+      propertyPath: end
+      value: 
+      objectReference: {fileID: 266317138}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 18e6b7351635c454cbdeda5a1800f693, type: 3}
 --- !u!1001 &3369511953132098052
