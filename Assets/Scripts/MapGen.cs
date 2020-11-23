@@ -14,9 +14,9 @@ public class MapGen : MonoBehaviour
 
     const int SAVE_LENGTH = 50;
 
-    static public int mapLength = 200;
+    static public int mapLength = 216;
 
-    static public int seed = 543543456;
+    static public int seed = 1031;
 
     public TileBase groundTile;
     public TileBase waterTile;
@@ -35,7 +35,7 @@ public class MapGen : MonoBehaviour
 
         float noise = 0f;
         int x = 0;
-        while (noise < 0.7f)
+        while (noise * TERRAIN_HEIGHT < WATER_HEIGHT + 1)
         {
             noise = Mathf.PerlinNoise((x / (float)mapLength) * 8f, seed * 0.000001f);
             x++;
@@ -72,7 +72,7 @@ public class MapGen : MonoBehaviour
                 }
                 platformWidth--;
             }
-            else if (height < WATER_HEIGHT - 1)
+            else if (height < WATER_HEIGHT - 1 && i > SAVE_LENGTH + 3)
             {
                 if (isFirstPlatform)
                 {
@@ -89,9 +89,9 @@ public class MapGen : MonoBehaviour
                 isFirstPlatform = true;
             }
 
-            if (i == mapLength + SAVE_LENGTH)
+            if (i == mapLength + SAVE_LENGTH && (height > WATER_HEIGHT || !isSpace))
             {
-                endFlag.position = new Vector3(i - 0.5f, isSpace ? height : platformHeight - 0.5f, 0f);
+                endFlag.position = new Vector3(i + 0.5f, isSpace ? height : platformHeight + 1, 0f);
             }
 
         }
