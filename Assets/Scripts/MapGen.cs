@@ -14,9 +14,9 @@ public class MapGen : MonoBehaviour
 
     const int SAVE_LENGTH = 50;
 
-    static public int mapLength = 216;
+    static public int mapLength = 222;
 
-    static public int seed = 1031;
+    static public int seed = 512826;
 
     public TileBase groundTile;
     public TileBase waterTile;
@@ -32,6 +32,8 @@ public class MapGen : MonoBehaviour
         int platformHeight = 0;
         bool isFirstPlatform = true;
         bool isSpace = false;
+
+        bool flagInstalled = false;
 
         float noise = 0f;
         int x = 0;
@@ -89,9 +91,10 @@ public class MapGen : MonoBehaviour
                 isFirstPlatform = true;
             }
 
-            if (i == mapLength + SAVE_LENGTH && (height > WATER_HEIGHT || !isSpace))
+            if (!flagInstalled && i > mapLength + SAVE_LENGTH && (height > WATER_HEIGHT || (!isSpace && platformWidth < 4)))
             {
-                endFlag.position = new Vector3(i + 0.5f, isSpace ? height : platformHeight + 1, 0f);
+                endFlag.position = new Vector3(i + 1f, isSpace ? height : platformHeight + 1f, 0f);
+                flagInstalled = true;
             }
 
         }
