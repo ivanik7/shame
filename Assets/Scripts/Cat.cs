@@ -14,6 +14,9 @@ public class Cat : Unit
     private bool isDamaged = false;
     private float damageTime = 0f;
 
+    private float dir;
+    private bool isMobile = false;
+
     public Transform end;
     private Rigidbody2D rigibody;
     private Animator animator;
@@ -38,11 +41,18 @@ public class Cat : Unit
 
         currentSpeed = speed;
         satiety = maxSatiety;
+
+        isMobile = SystemInfo.deviceType == DeviceType.Handheld;
     }
 
     private void Start()
     {
         Result.startTime = DateTime.Now;
+    }
+
+    public void SetDir(float dir)
+    {
+        this.dir = dir;
     }
 
     private void FixedUpdate()
@@ -51,13 +61,20 @@ public class Cat : Unit
         if (!jump.isGrounded) state = State.Jump;
         else if (Math.Abs(rigibody.velocity.x) > 0.1f) state = State.Run;
         else state = State.Idle;
+
+        if (dir != 0) Run();
     }
 
     private void Update()
     {
-        if (Input.GetButton("Horizontal")) Run();
-        if (Input.GetButtonDown("Jump")) jump.DoJump();
-        jump.holdJump = Input.GetButton("Jump");
+        if (!isMobile)
+        {
+            dir = Input.GetAxis("Horizontal");
+            if (Input.GetButtonDown("Jump")) jump.DoJump();
+            jump.holdJump = Input.GetButton("Jump");
+        }
+
+
         if (transform.position.y < yBorder) Die();
 
         if (Time.time - damageTime > 5f)
@@ -73,7 +90,7 @@ public class Cat : Unit
 
     private void Run()
     {
-        Vector3 direction = transform.right * Input.GetAxis("Horizontal");
+        Vector3 direction = transform.right * dir;
         transform.position = Vector3.MoveTowards(transform.position, transform.position + direction, currentSpeed * Time.deltaTime);
         sprite.flipX = direction.x > 0;
     }

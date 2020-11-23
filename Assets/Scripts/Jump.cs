@@ -54,4 +54,9 @@ public class Jump : MonoBehaviour
             rigibody.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
         }
     }
+
+    public void SetHold(bool hold)
+    {
+        holdJump = hold;
+    }
 }
