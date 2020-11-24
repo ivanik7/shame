@@ -710,12 +710,18 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 2060641154}
+    - target: {fileID: 2315212710818100846, guid: da50c9863b44d034ea4a463434a46d08,
+        type: 3}
+      propertyPath: ground
+      value: 
+      objectReference: {fileID: 1005269936}
     - target: {fileID: 7796137619714554189, guid: da50c9863b44d034ea4a463434a46d08,
         type: 3}
       propertyPath: jumpForce
       value: 10
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8061509803522862856, guid: da50c9863b44d034ea4a463434a46d08, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: da50c9863b44d034ea4a463434a46d08, type: 3}
 --- !u!1 &505728319 stripped
 GameObject:
@@ -1046,7 +1052,7 @@ MonoBehaviour:
   tilemap: {fileID: 1005269939}
   waterTilemap: {fileID: 1278939535}
   endFlag: {fileID: 266317138}
-  bird: {fileID: 0}
+  bird: {fileID: 7662661655836722834, guid: 73411a2563267fc4faefc708764d9a4b, type: 3}
 --- !u!1 &710509718
 GameObject:
   m_ObjectHideFlags: 0

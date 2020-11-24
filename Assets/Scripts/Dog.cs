@@ -14,6 +14,8 @@ public class Dog : Unit
     public float jumpCooldown = 0.5f;
     private float currentJumpCooldown = 0f;
 
+    public GameObject ground;
+
     private Rigidbody2D rigibody;
     private Animator animator;
     private SpriteRenderer sprite;
@@ -46,7 +48,7 @@ public class Dog : Unit
         bool isCollided = false;
         foreach (Collider2D item in colliders)
         {
-            if (item.name != this.name)
+            if (item.gameObject == ground)
             {
                 isCollided = true;
             }
