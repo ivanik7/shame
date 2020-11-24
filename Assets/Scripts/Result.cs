@@ -6,7 +6,6 @@ public class Result : MonoBehaviour
 {
     public static DateTime startTime = DateTime.Now;
     public static int damage = 0;
-    public static int birds = 0;
     public static bool isDie = false;
 
     public static void Fail()

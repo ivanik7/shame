@@ -1046,6 +1046,7 @@ MonoBehaviour:
   tilemap: {fileID: 1005269939}
   waterTilemap: {fileID: 1278939535}
   endFlag: {fileID: 266317138}
+  bird: {fileID: 0}
 --- !u!1 &710509718
 GameObject:
   m_ObjectHideFlags: 0

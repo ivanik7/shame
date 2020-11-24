@@ -6,6 +6,7 @@ public class Cat : Unit
 
     public int maxSatiety = 3;
     public float speed = 10f;
+    public float birdSpeed = 11f;
     public float waterSpeed = 3f;
     private float currentSpeed = 0f;
 
@@ -13,6 +14,10 @@ public class Cat : Unit
     public int satiety;
     private bool isDamaged = false;
     private float damageTime = 0f;
+    private bool isBirdEated = false;
+    private float birdEatedTime = 0f;
+
+    private bool inWater = false;
 
     private float dir;
     private bool isMobile = false;
@@ -57,12 +62,9 @@ public class Cat : Unit
 
     private void FixedUpdate()
     {
-        // TODD: Возможно перенести это в Update() 
         if (!jump.isGrounded) state = State.Jump;
         else if (Math.Abs(rigibody.velocity.x) > 0.1f) state = State.Run;
         else state = State.Idle;
-
-        if (dir != 0) Run();
     }
 
     private void Update()
@@ -71,15 +73,22 @@ public class Cat : Unit
         {
             dir = Input.GetAxis("Horizontal");
             if (Input.GetButtonDown("Jump")) jump.DoJump();
-            jump.holdJump = Input.GetButton("Jump");
+            jump.holdJump = Input.GetButton("Jump"); // TODO
         }
 
+        if (dir != 0) Run();
 
         if (transform.position.y < yBorder) Die();
 
         if (Time.time - damageTime > 5f)
         {
             isDamaged = false;
+        }
+
+        if (Time.time - birdEatedTime > 5f)
+        {
+            isBirdEated = false;
+            UpdateSpeed();
         }
 
         if (transform.position.x > end.position.x)
@@ -95,6 +104,13 @@ public class Cat : Unit
         sprite.flipX = direction.x > 0;
     }
 
+    private void UpdateSpeed()
+    {
+        if (inWater) currentSpeed = waterSpeed;
+        else if (isBirdEated) currentSpeed = birdSpeed;
+        else currentSpeed = speed;
+    }
+
     protected override void Die()
     {
         Result.Fail();
@@ -102,8 +118,9 @@ public class Cat : Unit
 
     public void Eat()
     {
-        satiety++;
-        Result.birds++;
+        isBirdEated = true;
+        birdEatedTime = Time.time;
+        UpdateSpeed();
     }
 
     public override void ReceiveDamage()
@@ -124,7 +141,8 @@ public class Cat : Unit
         // FIXME
         if (collisionInfo.gameObject.name == "Water")
         {
-            currentSpeed = waterSpeed;
+            inWater = true;
+            UpdateSpeed();
         }
 
     }
@@ -133,7 +151,8 @@ public class Cat : Unit
         // FIXME
         if (collisionInfo.gameObject.name == "Water")
         {
-            currentSpeed = speed;
+            inWater = false;
+            UpdateSpeed();
         }
     }
 
