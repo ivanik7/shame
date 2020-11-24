@@ -14,9 +14,8 @@ public class MapGen : MonoBehaviour
 
     const int SAVE_LENGTH = 50;
 
-    static public int mapLength = 222;
-
-    static public int seed = 512826;
+    static public int mapLength = 245;
+    static public int seed = 386302;
 
     public TileBase groundTile;
     public TileBase waterTile;
@@ -37,7 +36,7 @@ public class MapGen : MonoBehaviour
 
         float noise = 0f;
         int x = 0;
-        while (noise * TERRAIN_HEIGHT < WATER_HEIGHT + 1)
+        while (noise * TERRAIN_HEIGHT < WATER_HEIGHT + 2)
         {
             noise = Mathf.PerlinNoise((x / (float)mapLength) * 8f, seed * 0.000001f);
             x++;
@@ -45,8 +44,10 @@ public class MapGen : MonoBehaviour
 
         for (int i = 0; i < mapLength + 2 * SAVE_LENGTH; i++)
         {
-            noise = Mathf.PerlinNoise(((i + x + SAVE_LENGTH) / (float)mapLength) * 8f, seed * 0.000001f);
+            noise = Mathf.PerlinNoise(((i + (x - SAVE_LENGTH)) / (float)mapLength) * 8f, seed * 0.000001f);
             int height = Mathf.FloorToInt(noise * TERRAIN_HEIGHT);
+
+            if (i == SAVE_LENGTH) tilemap.SetTile(new Vector3Int(i, 25, 0), platformTile);
 
             for (int j = 0; j < TERRAIN_HEIGHT; j++)
             {
