@@ -19,4 +19,10 @@ public class Result : MonoBehaviour
         isDie = false;
         SceneManager.LoadScene("Result");
     }
+
+    public static void Reset()
+    {
+        startTime = DateTime.Now;
+        damage = 0;
+    }
 }

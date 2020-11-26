@@ -1,13 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Bird : Unit
 {
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Cat cat = collision.GetComponent<Cat>();
-        if (cat) {
+        if (cat)
+        {
             cat.Eat();
             Die();
         }

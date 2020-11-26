@@ -25,6 +25,8 @@ public class MapGen : MonoBehaviour
     {
         Random.InitState(seed);
 
+        Result.Reset();
+
         int platformWidth = 0;
         int platformHeight = 0;
         bool isFirstPlatform = true;
@@ -46,8 +48,6 @@ public class MapGen : MonoBehaviour
         {
             noise = Mathf.PerlinNoise(((i + (x - SAVE_LENGTH)) / (float)mapLength) * 8f, seed * 0.000001f);
             int height = Mathf.FloorToInt(noise * TERRAIN_HEIGHT);
-
-            if (i == SAVE_LENGTH) tilemap.SetTile(new Vector3Int(i, 25, 0), platformTile);
 
             // Поверхность
             for (int j = 0; j < TERRAIN_HEIGHT; j++)
@@ -94,7 +94,7 @@ public class MapGen : MonoBehaviour
 
                 if (i - birdPosition > BIRD_DISTANTION)
                 {
-                    float birdRandom = Random.Range(0f, 4f);
+                    float birdRandom = Random.Range(0f, 10f);
                     if (birdRandom < 1f)
                     {
                         birdPosition = i + Mathf.FloorToInt(birdRandom * (platformWidth - 1));
